@@ -1,5 +1,5 @@
 <?php
-
+require_once 'database.php';
 class LineItemDA {
     
         public static function create_line_item($purchaseID, $bagID, $quantity) {

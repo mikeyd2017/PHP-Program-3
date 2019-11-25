@@ -1,5 +1,6 @@
 <?php
 
+require_once 'database.php';
 class BagDA {
     
         public static function get_all_bags() {       
@@ -23,7 +24,7 @@ class BagDA {
             $statement = $db->prepare($query);
             $statement->bindValue(':bagID', $bagID);
             $statement->bindValue(':title', $title);
-            $statement->bindValue(':decription', $description);
+            $statement->bindValue(':description', $description);
             $statement->bindValue(':price', $price);
             $statement->execute();
             $statement->closeCursor();

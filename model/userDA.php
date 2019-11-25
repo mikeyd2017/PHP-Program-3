@@ -16,17 +16,17 @@ class UserDA {
             return $results;
         }
         
-        public static function create_user($userName, $firstName, $lastName, $password, $email) {
+        public static function create_user($userName, $firstName, $lastName, $email, $password) {
             $db = Database::getDB();
-            $query = "INSERT INTO users UserName, FirstName, LastName, Password, Email)
-                      VALUES( :userName, :firstName, :lastName, :password, :email)";
+            $query = "INSERT INTO Users(UserName, FirstName, LastName, Email, Password)
+                      VALUES(:userName, :firstName, :lastName, :email, :password)";
 
             $statement = $db->prepare($query);
             $statement->bindValue(':username', $userName);
             $statement->bindValue(':firstName', $firstName);
             $statement->bindValue(':lastName', $lastName);
-            $statement->bindValue(':password', $password);
             $statement->bindValue(':email', $email);
+            $statement->bindValue(':password', $password);
             $statement->execute();
             $statement->closeCursor();
         }

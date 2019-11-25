@@ -2,8 +2,8 @@
     
 class Database {
     
-    private static $dsn = 'WILL REPLACE WILL AZURE SQL SERVER CONNECTION STRING';
-    private static $username = 'HamiltonAdmin';
+    private static $dsn = 'sqlsrv:server = tcp:hamiltonroad.database.windows.net,1433; Database = HamiltonRoad';
+    private static $username = 'hamiltonroadadmin';
     private static $password = 'Hamilton#';
     private static $db;
     

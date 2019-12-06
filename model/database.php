@@ -2,9 +2,9 @@
     
 class Database {
     
-    private static $dsn = 'sqlsrv:server = tcp:hamiltonroad.database.windows.net,1433; Database = HamiltonRoad';
-    private static $username = 'hamiltonroadadmin';
-    private static $password = 'Hamilton#';
+    private static $dsn = 'mysql:host=localhost;dbname=HamiltonRoad';
+    private static $username = 'root';
+    private static $password = '';
     private static $db;
     
     private function __construct() {}

@@ -13,14 +13,30 @@
             <?php
             foreach ($bags as $bag) {
                 ?>
-                <li class="user">
-                    <div id="user-info">
-                        <h3><a <?php echo htmlspecialchars ($bag["Title"]); ?></h3>
-                        <p><?php echo htmlspecialchars ($bag["Description"]);?> </p>
-                        <p><?php echo htmlspecialchars($bag["Price"]);?></p>
+            <form action="." method="post">
+                <input type="hidden" name="action" value="add_bag_to_cart">
+                <input type="hidden" name="bagTitle" value=<?php echo $bag["Title"]; ?>>
+                <li class="bag-container">
+                    <div class="bag">
+                        <h3 class="bag-title"><?php echo htmlspecialchars ($bag["Title"]); ?></h3>
+                        <img src="<?php echo htmlspecialchars ($bag['FileName']) ?>" alt="bag picture" height="100" width="100" class="bag-picture">
+                        <p class="bag-description"><?php echo htmlspecialchars ($bag["Description"]);?> </p>
+                        <p class="bag-price"><?php echo htmlspecialchars($bag["Price"]);?></p>
+                        <input class="bag-button" type="submit" value="Add To Cart">
+                        <div class="bag-quantity">
+                        <label>Quantity:</label>
+                            <select name="itemqty">
+                                <?php for($i = 1; $i <= 10; $i++) : ?>
+                                    <option value="<?php echo $i; ?>">
+                                        <?php echo $i; ?>
+                                    </option>
+                                <?php endfor; ?>
+                            </select>
+                        </div>
                     </div>
 
                 </li>
+            </form>
 
             <?php } ?>
         </ul>

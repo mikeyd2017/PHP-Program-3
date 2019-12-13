@@ -1,12 +1,12 @@
 <?php
 
 class LineItem {
-    private $purchaseID, $bagID, $quantity;
+    private $purchaseID, $bagTitle, $quantity, $price;
     
-    function __construct($purchaseID, $bagID, $quantity)
+    function __construct($purchaseID, $bagTitle, $quantity, $price)
     {
         $this->purchaseID = $purchaseID;
-        $this->bagID = $bagID;
+        $this->bagTitle = $bagTitle;
         $this->quantity = $quantity;
     }
     
@@ -14,24 +14,32 @@ class LineItem {
         return $this->purchaseID;
     }
     
-    function getBagID() {
-        return $this->bagID;
+    function getBagTitle() {
+        return $this->bagTitle;
     }
     
     function getQuantity() {
         return $this->quantity;
     }
     
+    function getPrice() {
+        return $this->price;
+    }
+    
     function setPurchaseID() {
         $this->purchaseID = $purchaseID;
     }
     
-    function setBagID() {
-        $this->bagID = $bagID;
+    function setBagTitle() {
+        $this->bagTitle = $bagTitle;
     }
     
     function setQuantity() {
         $this->quantity = $quantity;
+    }
+    
+    function setPrice() {
+        $this->price = $price;
     }
 }
 /* 

@@ -29,12 +29,12 @@ class BagDA {
             $statement->closeCursor();
         }
         
-        public static function get_bag($bagID) {
+        public static function get_bag($bagTitle) {
             $db = Database::getDB();
 
-            $query = "SELECT BagID, Title, Description, Price FROM bags WHERE bags.BagID = :bagID";
+            $query = "SELECT * FROM bags WHERE bags.Title = :bagTitle";
             $statement = $db->prepare($query);
-            $statement->bindValue(':bagID', $bagID);
+            $statement->bindValue(':bagTitle', $bagTitle);
             $statement->execute();
             $results = $statement->fetchAll();
             $statement->closeCursor();
@@ -70,6 +70,23 @@ class BagDA {
         $statement->bindValue(':bagTitle', $bagTitle);
         $statement->execute();
         $statement->closeCursor();
+    }
+    
+    public static function isTitleAvailable($bagTitle)   {
+        $db = Database::getDB();
+
+        $query = 'SELECT Title FROM bags WHERE bags.Title = :bagTitle';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':bagTitle', $bagTitle);
+        $statement->execute();
+        $users = $statement->fetchAll();
+        $statement->closeCursor();
+
+        if(empty($users)) {
+            return true;
+        } else {
+            return false;
+        }
     }
         
     }

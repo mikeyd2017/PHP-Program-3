@@ -1,0 +1,214 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Dec 11, 2019, 11:02:00 PM
+    Author     : dambr
+*/
+
+.right-column {
+    width: 70%;
+    float: right;
+    min-height: 100vh;
+    height: 100%;
+    position: relative;
+    background-color: #368cbf;
+}
+
+.left-column {
+    width: 30%;
+    float: left;
+    background-color: #33363b;
+    height: 100vh;
+    position: fixed;
+}
+
+.username {
+    text-align: center;
+    color: white;
+    font-size: 25px;
+    text-transform: uppercase;
+}
+
+.cart-container {
+    max-height: 600px;
+    overflow: scroll;
+    position: relative;
+    border: 2px solid white;
+    margin: 20px;
+}
+.lineItem {
+
+    margin: 20px;
+}
+
+.lineItem li:first-of-type {
+    display: block;
+    font-size: 20px;
+    color: white;
+}
+
+.lineItem li:nth-child(2) {
+    margin-right: 10px;
+}
+
+.lineItem li {
+    display: inline-block;
+    font-size: 16px;
+    color: white;
+}
+
+nav {
+    
+}
+
+nav ul {
+    margin: 20px auto;
+    text-align: center;
+    padding-left: 0px;
+    font-size: 20px;
+    color: white;
+}
+
+nav ul li {
+    display: inline-block;
+    margin-left: 20px;
+    background-color: black;
+    padding: 10px;
+}
+
+nav ul li:first-of-type {
+    margin-left: 0px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.cart-total {
+    font-size: 20px;
+    margin-left: 4%;
+    color: white;
+    display: inline-block;
+}
+
+.checkout-button {
+    display: inline-block;
+    margin-left: 20px;
+    background-color: black;
+    padding: 10px;
+    color: white;
+}
+
+.right-column h1 {
+    text-align: center;
+    color: white;
+    text-transform: uppercase;
+    font-size: 40px;
+}
+
+.bag-container {
+    padding: 20px;
+    height: auto;
+}
+
+.bag {
+    width: 20%;
+    margin-left: 40px;
+    display: inline-block;
+    border: 2px solid white;
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+
+.bag-title {
+    text-align: center;
+}
+
+.bag-picture {
+    display: block;
+    margin: 0 auto;
+}
+.bag-description {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.bag-description::after {
+    content: close-quote;
+}
+
+.bag-description::before {
+    content: open-quote;
+}
+
+.bag-price {
+    text-align: center;
+    color: white;
+}
+
+.bag-quantity {
+    text-align: center;
+}
+
+.bag-button {
+    display: block;
+    margin: 10px auto;
+}
+
+.form-container {
+    margin: 0 auto;
+    width: 25%;
+    display: block;
+    font-size: 20px;
+    color: white;
+}
+
+.form-container label {
+    text-align: center;
+}
+
+.form-container input {
+    width: 100%;
+}
+
+.cart-login {
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+    color: white;
+}
+
+.error {
+    text-align: center;
+    color: white;
+    text-transform: uppercase;
+}
+
+.form-container input[type=submit] {
+    padding: 5px;
+    font-size: 20px;
+    margin-top: 10px;
+    color: white;
+    background-color: black;
+}
+
+.purchase-container {
+    text-align: center;
+}
+
+.bag-button {
+    padding: 5px;
+    font-size: 15px;
+    margin-top: 10px;
+    color: white;
+    background-color: black;
+}
+
+.additemtocart {
+    margin-left: 21px;
+    color: white;
+}

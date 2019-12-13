@@ -1,12 +1,13 @@
 <?php
 
 class Purchase {
-    private $userName, $date, $total;
+    private $userName, $date, $total , $purchaseID;
     
-    function __construct($userName, $date, $total) {
+    function __construct($purchaseID, $userName, $date, $total) {
         $this->username = $username;
         $this->date = $date;
         $this->total = $total;
+        $this->purchaseID = $purchaseID;
     }
     
     function getUserName() {
@@ -21,6 +22,10 @@ class Purchase {
         return $this->total;
     }
     
+    function getPurchaseID() {
+        return $this->purchaseID;
+    }
+    
     function setUserName(){ 
         $this->userName = $userName;
     }
@@ -31,6 +36,10 @@ class Purchase {
     
     function setTotal() {
         $this->total = $total;
+    }
+    
+    function setPurchaseID() {
+        $this->purchaseID = $purchaseID;
     }
 }
 /* 

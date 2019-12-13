@@ -5,7 +5,6 @@
     require_once('model/Purchase.php');
     require_once('model/User.php');
     require_once('model/bagDA.php');
-    require_once('model/cartDA.php');
     require_once('model/database.php');
     require_once('model/purchaseDA.php');
     require_once('model/userDA.php');
@@ -16,19 +15,9 @@
     session_set_cookie_params(3600);
     session_start();
 
-    if(!isset($_SESSION['username'])) {
-     $_SESSION['username'] = "";   
+    if(!isset($_SESSION['userName'])) {
+     $_SESSION['userName'] = "";   
     }
-    
-    if (empty($_SESSION['cart'])) { 
-        $_SESSION['cart'] = array();
-    }
-    
-    $products = array();
-    $products['MMS-1754'] = array('name' => 'Flute', 'cost' => '149.50');
-    $products['MMS-6289'] = array('name' => 'Trumpet', 'cost' => '199.50');
-    $products['MMS-3408'] = array('name' => 'Clarinet', 'cost' => '299.50');
-    
     $action = filter_input(INPUT_POST, 'action');
     
     if ($action == NULL) {
@@ -36,8 +25,13 @@
     if ($action == NULL) {
         $action = 'display_create_bag';
     }
+}  
+if($_SESSION["userName"] != "") {
+    $user = UserDA::get_user($_SESSION["userName"]);
 }
-    
+
+$lineItems = LineItemDA::get_all_lineItems($_SESSION["userName"]);
+
     switch($action) {
         case 'display_create_bag':
             include('view/displayCreateBag.php');
@@ -47,14 +41,16 @@
             $message = "";
             $title = filter_input(INPUT_POST, "title");
             $description = filter_input(INPUT_POST, "description");
-            $price = intval(filter_input(INPUT_POST, "price"));
+            $price = filter_input(INPUT_POST, "price");
             $message .= Validation::isNotEmpty($title, "title");
             $message .= Validation::isNotEmpty($description, "description");
             $message .= Validation::isNotEmpty($price, "price");
-            $message .= Validation::validLength($title, "title");
             $message .= Validation::validInt($price, "price");
+            $message .= Validation::noSpaces($title, "title");
             
-
+            if(!BagDA::isTitleAvailable($title)) {
+                $message .= "Bag Title is already being used" . "\n";
+            }
             
             if ($message == "") {
                 BagDA::create_bag($title, $description, $price);
@@ -65,7 +61,6 @@
                 include('view/displayCreateBag.php');
             }
             break;
-        
         case 'display_user_login':
             include('view/displayUserLogin.php');
             break;
@@ -95,7 +90,7 @@
                 $user = UserDA::get_user($username);
                 
                 
-                $_SESSION['username'] = $username;
+                $_SESSION['userName'] = $username;
                 header('Location: index.php?action=display_all_bags');                                       
             } else {
                 include('view/displayUserLogin.php');
@@ -135,15 +130,61 @@
                 $message .= "Password requires a digit, special character, an uppercase letter, and must be 10+ characters long" . "\n";
             }
             
+        if(!UserDA::isEmailAvailable($email)) {
+            $message .= "Email is taken" . "\n";
+        }
+        
+        if(!UserDA::isUserAvailable($userName)) {
+            $message .= "Username is taken" . "\n";
+        }
+
             if ($message == "") {
                 UserDA::create_user($userName, $firstName, $lastName, $email, $pwHash);
-                
+                /*
+                $to_email = 'hamiltonemailadmin@localhost.com';
+                $subject = 'Thanks for registering!';
+                $message = 'Hello '. $firstName . ' ' . $lastName . "Thanks for registering for Hamilton Road";
+                $headers = 'From: noreply@hamiltonroad.com';
+                mail($to_email,$subject,$message,$headers);
+                 */
                 include('view/displayUserLogin.php');
             } else {
                 include('view/displayCreateUser.php');
             }
             break;
-            
+        case 'add_bag_to_cart':
+            $bagTitle = filter_input(INPUT_POST, "bagTitle");
+            $bags = BagDA::get_all_bags();
+            $user = UserDA::get_user($_SESSION["userName"]);
+
+            $quantity = filter_input(INPUT_POST, "itemqty");
+            $bag = BagDA::get_bag($bagTitle);
+            $price = $quantity * $bag["Price"];
+            LineItemDA::create_line_item($_SESSION["userName"], $bagTitle, $quantity, $price);
+            $lineItems = LineItemDA::get_all_lineItems($_SESSION["userName"]);
+            include('view/displayAllBags.php');
+            break;
+        
+        case 'checkout_items':
+            $total = filter_input(INPUT_POST, "cartTotal");
+            $date = date("Y/m/d");
+            $purchaseID = rand(500, 10000);
+            PurchaseDA::create_purchase($purchaseID, $_SESSION["userName"], $total, $date);
+            LineItemDA::delete_all_lineItems($_SESSION["userName"]);
+            $purchases = PurchaseDA::get_purchases($_SESSION["userName"]);
+            include('view/displayPurchases.php');
+            break;
+        case 'delete_all_lineitems':
+            lineItemDA::delete_all_lineItems($_SESSION["userName"]);
+            $bags = BagDA::get_all_bags();
+            include('view/displayAllBags.php');
+            break;
+        case 'delete_lineitem':
+            $lineItemID = filter_input(INPUT_POST, "lineItemID");
+            lineItemDA::delete_lineItem($lineItemID);
+            $bags = BagDA::get_all_bags();
+            include('view/displayAllBags.php');
+            break;
         case 'edit_bag':
             
             if (isset($_FILES['image']) && $_FILES['image']['size'] != 0) { //Default picture gets added if no pictures are in isset($_FILES['image']) Line 223

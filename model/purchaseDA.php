@@ -2,11 +2,12 @@
 
 class PurchaseDA {
     
-        public static function get_all_purchases($userName) {       
+        public static function get_purchases($userName) {       
             $db = Database::getDB();
 
-            $query = 'SELECT * FROM purchases WHERE UserName = :username';
+            $query = 'SELECT * FROM purchases WHERE UserName = :userName';
             $statement = $db->prepare($query);
+            $statement->bindValue(':userName', $userName);
             $statement->execute();
             $results = $statement->fetchAll();
 
@@ -15,15 +16,16 @@ class PurchaseDA {
             return $results;
         }
         
-        public static function create_purchase($userName, $date, $total) {
+        public static function create_purchase($purchaseID, $userName, $total, $date) {
             $db = Database::getDB();
-            $query = "INSERT INTO purchases(UserName, Date, Total)
-                      VALUES(:userName, :date, :total)";
+            $query = "INSERT INTO purchases(PurchaseID, UserName, Total, Date)
+                      VALUES(:purchaseID, :userName, :total, :date)";
 
             $statement = $db->prepare($query);
             $statement->bindValue(':userName', $userName);
             $statement->bindValue(':date', $date);
             $statement->bindValue(':total', $total);
+            $statement->bindValue(':purchaseID', $purchaseID);
             $statement->execute();
             $statement->closeCursor();
         }

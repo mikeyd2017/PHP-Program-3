@@ -45,6 +45,14 @@ class Validation {
         }
     }
     
+    public function noSpaces($arg, $label) {
+        if ( preg_match('/\s/',$arg) ) {
+                return $label. 'must not contain any spaces' . "\n";
+        } else {
+            return "";
+        }
+    }
+    
     //validate password
     public function PasswordValidation($arg) {
         
